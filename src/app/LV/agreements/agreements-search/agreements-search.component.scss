@@ -1,0 +1,31 @@
+ng-select{
+    width: 100%;
+}
+.scrolling-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+.lock-pinned{
+    background: #6e6e6e;
+}
+
+.page-option{
+    height: 25px !important;
+    width: auto;
+    vertical-align: top;
+}
+
+.toolbar-btn{
+
+    height: auto;
+    width: auto;
+}
+
+.btn-icon{
+    margin: 0px;
+    padding: 0px;
+}
+
+

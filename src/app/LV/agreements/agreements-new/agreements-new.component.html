@@ -1,0 +1,223 @@
+<form #newAgreement="ngForm" (ngSubmit)="createNewAgreement(newAgreement.value); newAgreement.reset()">
+<div class="card m-0" *ngIf="selectOptions">
+    <div class="row card-header">
+      <button *ngIf="newAgreement.valid" type="submit"  (click)="addToast({title:'Agreement Created!', msg:'Save Was Successful', timeout: 5000, theme:'bootstrap', position:'bottom-right', type:'success'})" class="btn btn-info btn-sm mb-0 align-bottom" [placement]="'bottom'" ngbTooltip="Save Agreement" class="btn btn-sm btn-success toolbar-btn ml-1"><i class="fa fa-save"></i>Save</button>
+      <h6 class="mt-2 mr-2">Status:</h6>
+      <ng-select [items]="selectOptions.AgreementStatuses"
+          bindLabel="AgreementStatusDesc"
+          bindValue = 'AgreementStatusCode'
+          placeholder="Select Status"
+          dropdownPosition= 'bottom'
+          ngModel
+          name="AgreementStatusCode"
+          class="btn-sm"
+          id="Agreement-Status"
+          >
+      </ng-select>
+    </div>
+    <div class="card-body">
+            <div class="form-row">
+              {{ newAgreement.value | json}}
+            </div>
+            <div class="form-row m-0 p-0">
+              <div class="form-group col-md-4">
+                <label for="AgreementNumber" class="font-weight-bold">Agreement Number:</label>
+                <input name="AgreementNumber" type="text" class="form-control form-control-sm bg-white" placeholder="" ngModel required>
+              </div>
+              <div class="form-group col-md-8">
+                <label for="Lessor" class="font-weight-bold">Lessor:</label>
+                <input name="Lessor" type="text" class="form-control bg-white" placeholder="" ngModel>
+              </div>
+            </div>
+            <div class="form-row m-0">
+                <div class="form-group col-md-4">
+                  <label for="AltAgreementNumber" class="font-weight-bold">Alt Agreement Number:</label>
+                  <input name="AltAgreementNumber" type="text" class="form-control bg-white" placeholder="" ngModel>
+                </div>
+                <div class="form-group col-md-8">
+                  <label for="Lessee" class="font-weight-bold">Lessee:</label>
+                  <input name="Lessee" type="text" class="form-control bg-white" placeholder="" ngModel>
+                </div>
+            </div>
+            <div class="form-row m-0">
+                <div class="form-group col-md-4">
+                    <label for="AgreementName" class="font-weight-bold">Agreement Name:</label>
+                    <input name="AgreementName" type="text" class="form-control form-control-sm bg-white" placeholder="" ngModel required>
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="GrossAcres_Calc" class="font-weight-bold">Gross Acres:</label>
+                  <input name="GrossAcres_Calc"  type="number" class="form-control font-weight-bold" placeholder="" readonly value="0.00" ngModel>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="AgreementDate" class="font-weight-bold">Agreement Date:</label>
+                    <input name="AgreementDate" type="date" class="form-control bg-white" placeholder="" ngModel>
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="Term" class="font-weight-bold">Term:</label>
+                    <input name="Term" type="number" class="form-control bg-white" placeholder="" min="0" ngModel>
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="Lessee" class="font-weight-bold">Unit:</label>
+                    <ng-select [items]="TermUnits"
+                    bindLabel="description"
+                    bindValue = 'value'
+                    placeholder=""
+                    dropdownPosition= 'bottom'
+                    ngModel
+                    name="TermUnit"
+                    class=""
+                    id=""
+                    >
+                  </ng-select>    
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="DropDate" class="font-weight-bold">Drop Date:</label>
+                    <input name="DropDate" type="date" class="form-control bg-white"  placeholder="" ngModel>
+                </div>
+            </div>
+            <div class="form-row m-0">
+              <div class="form-group col-md-4">
+                  <label for="AgreementTypeCode" class="font-weight-bold">Agreement Type:</label>
+                  <ng-select [items]="selectOptions.AgreementTypes"
+                  bindLabel="AgreementTypeDesc"
+                  bindValue = 'AgreementTypeCode'
+                  placeholder="Select Agreement Type"
+                  dropdownPosition= 'bottom'
+                  ngModel
+                  name="AgreementTypeCode"
+                  class=""
+                  id=""
+                  required
+                  >
+                </ng-select>                
+              </div>
+              <div class="form-group col-md-2">
+                  <label for="ReportedAcres_Calc" class="font-weight-bold">Reported Acres:</label>
+                  <input name="ReportedAcres_Calc" type="number" class="form-control font-weight-bold"  placeholder="" readonly value="0.00" ngModel>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="Lessee" class="font-weight-bold">Effective Date:</label>
+                    <input name="EffectiveDate" type="date" class="form-control bg-white" placeholder="" ngModel>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="Lessee" class="font-weight-bold">Expiration Date:</label>
+                    <input name="ExpirationDate" type="date" class="form-control bg-white" placeholder="" ngModel>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="Lessee" class="font-weight-bold">Drop Reason:</label>
+                    <ng-select [items]="selectOptions.AgreementDropReasons"
+                    bindLabel="DropReasonDesc"
+                    bindValue = 'DropReasonCode'
+                    placeholder=""
+                    dropdownPosition= 'bottom'
+                    ngModel
+                    name="DropReasonCode"
+                    class=""
+                    id=""
+                    >
+                  </ng-select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="AgreementRightsTypeCode" class="font-weight-bold">Rights Owned:</label>
+                    <ng-select [items]="selectOptions.AgreementRightsTypes"
+                    bindLabel="AgreementRightsTypeDesc"
+                    bindValue = 'AgreementRightsTypeCode'
+                    placeholder="Select Rights Type"
+                    dropdownPosition= 'bottom'
+                    ngModel
+                    name="AgreementRightsTypeCode"
+                    class=""
+                    id=""
+                    required
+                    >
+                    </ng-select>                 
+                </div>
+
+              <div class="form-group col-md-2">
+                  <label for="Lessee" class="font-weight-bold">Net Acres:</label>
+                  <input name="NetAcres_Calc" type="number" class="form-control font-weight-bold" readonly  ngModel>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="Lessee" class="font-weight-bold">Next Obligation:</label>
+                    <input name="NextObligationDate" type="date" class="form-control bg-white" placeholder="" ngModel>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="Lessee" class="font-weight-bold">Ext. Expiration Date:</label>
+                    <input name="ExtendedExpDate" type="date" class="form-control bg-white" placeholder="" ngModel>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="AgreementNumber" class="font-weight-bold">Agreement Group: (Options Hard Coded For Now)</label>
+                    <ng-select [items]="GroupFormCodes"
+                    bindLabel="groupName"
+                    bindValue = 'groupCode'
+                    placeholder="Select Group"
+                    dropdownPosition= 'bottom'
+                    ngModel
+                    name="AgreementFormGroupCode"
+                    class=""
+                    id=""
+                    required
+                    >
+                    </ng-select>                 
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="Lessee" class="font-weight-bold">Group Acres:</label>
+                    <input name="GroupAcres_Calc" type="number" class="form-control font-weight-bold" placeholder="" readonly value="0.00" ngModel>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label for="Lessee" class="font-weight-bold">First Assn Received:</label>
+                      <input name="AssnReceivedDate" type="date" class="form-control bg-white" placeholder="" ngModel>
+                  </div>
+                  <div class="form-group col-md-4">
+                      <label for="Lessee" class="font-weight-bold">Notes:</label>
+                      <textarea name="AssnReceivedComment" class="form-control bg-white" rows="1" ngModel></textarea>
+                    </div>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-4">
+                      <label for="AgreementTypeCode" class="font-weight-bold">Agreement Class:</label>
+                      <ng-select [items]="AgreementClasses"
+                      bindLabel="className"
+                      bindValue = 'classCode'
+                      placeholder="Select Agreement Class"
+                      dropdownPosition= 'bottom'
+                      ngModel
+                      name="AgreementClassCode"
+                      class=""
+                      id=""
+                      required
+                      >
+                    </ng-select>                
+                  </div>
+                  <div class="form-group col-md-1">
+                      <label for="Lessee" class="font-weight-bold">Co. Acres:</label>
+                      <input name="CompanyAcres_Calc" type="number" class="form-control font-weight-bold" placeholder="" readonly value="0.00" ngModel>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="Lessee" class="font-weight-bold">Co. NRIA:</label>
+                        <input name="CompanyNRIAcres_Calc" type="number" class="form-control font-weight-bold" placeholder="" readonly value="0.00" ngModel>
+                      </div>
+                    <div class="form-group col-md-2">
+                        <label for="Lessee" class="font-weight-bold">First Assn Delivered :</label>
+                        <input name="AssnDeliveredDate" type="date" class="form-control bg-white" placeholder="" ngModel>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="Lessee" class="font-weight-bold">Notes:</label>
+                        <textarea name="AssnDeliveredComment" class="form-control bg-white" rows="1" ngModel></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="exampleFormControlTextarea1" class="font-weight-bold">Agreement Legal</label>
+                        <textarea name="AgreementLegal" class="form-control bg-white" rows="3" ngModel></textarea>
+                    </div>
+                </div>
+              </div>
+            </div>
+</form>
+<ng2-toasty [position]="position"></ng2-toasty>

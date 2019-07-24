@@ -1,0 +1,38 @@
+
+<div class="row col-12">
+    {{ imageForm.controls['files'].value  }}
+    <button (click)="modalDefault.show()" ngbTooltip="Comment" type="button" class="btn btn-sm btn-light ml-auto"><i class="fa fa-plus"></i>New Image</button>
+</div>
+<hr>
+<div class="col-12">
+    <div class="text-center">
+        <h5>No Images At This Time</h5>
+    </div>
+</div>
+
+<app-ui-modal #modalDefault>
+    <div class="app-modal-header">
+      <h5 class="modal-title">Add An Image</h5>
+      <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="modalDefault.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <form [formGroup]="imageForm">
+          <file-upload formControlName="files"></file-upload>
+          <label for="image-type">Example select</label>
+          <ng-select [items]="selectOptions"
+            bindLabel="name"
+            bindValue = "value"
+            placeholder="Select Image Type"
+            dropdownPosition= 'bottom'
+            name="TermUnit"
+            class="shadow-sm bg-white ng-select"
+            >
+          </ng-select>
+        </form>
+    </div>
+    <div class="app-modal-footer">
+      <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" (click)="modalDefault.hide()"><i class="far fa-window-close"></i>Cancel</button>
+      <button type="button" class="btn btn-sm btn-success" (click)="uploadImage(imageForm)" (click)="modalDefault.hide()"><i class="far fa-plus-square"></i>Add Image</button>
+    </div>
+</app-ui-modal>
+

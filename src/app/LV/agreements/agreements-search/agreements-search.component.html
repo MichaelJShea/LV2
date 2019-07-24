@@ -1,0 +1,979 @@
+
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <app-card cardTitle="Search Agreements" [options]="true">
+      <form *ngIf="SearchOptions">
+          <!-- COLUMN #1 -->
+          <div class="row">
+              <div class="col bg-light border shadow rounded p-2">
+                <div class="form-group row text-center m-1">
+                  <label class="col-form-label-sm font-weight-bold pb-0">Agreement Number:</label>
+                  <input name="AgreementNumber" type="text" class="form-control shadow-sm bg-white " placeholder="Agreement Number" [(ngModel)]="searchParams.AgreementNumber">
+                </div>
+
+                <div class="form-group row text-center m-1">
+                  <label class="col-form-label-sm font-weight-bold">Alt. Agreement Number:</label>
+                  <input name="AltAgreementNumber" type="text" class="form-control shadow-sm bg-white" placeholder="Alt. Agreement Number" [(ngModel)]="searchParams.AltAgreementNumber">
+                </div>
+
+                <div class="form-group row m-1">
+                    <label class="bmd-label-floating font-weight-bold">Agreement: </label>
+                    <ng-select
+                        [items]="TestData"
+                        [multiple]="true"
+                        [closeOnSelect]="false"
+                        [hideSelected]="true"
+                        bindLabel="name"
+                        bindValue="value"
+                        placeholder="Not Correct Options"
+                        loadingText="Loading...."
+                        dropdownPosition= 'bottom'
+                        [(ngModel)]="searchParams.Agreement"
+                        name="Agreement"
+                        class="shadow-sm bg-white"
+                        >
+                    </ng-select>
+                </div>
+
+                <div class="form-group row text-center m-1">
+                    <label class="col-form-label-sm font-weight-bold">Agreement ID:</label>
+                    <input name="AgreementID" type="number" class="form-control form-control-sm shadow-sm bg-white" placeholder="Agreement ID" [(ngModel)]="searchParams.AgreementID">
+                </div>
+                
+                <div class="form-group row m-1">
+                    <label class="bmd-label-floating font-weight-bold">Agreement Group: </label>
+                    <ng-select
+                        [items]="TestData"
+                        [multiple]="false"
+                        [closeOnSelect]="true"
+                        [hideSelected]="true"
+                        bindLabel="name"
+                        bindValue="value"
+                        placeholder="Agreement Group"
+                        loadingText="Loading...."
+                        dropdownPosition= 'bottom'
+                        [(ngModel)]="searchParams.AgreementGroupID"
+                        name="AgreementGroupID"
+                        class=""
+                        >
+                    </ng-select>
+                </div>
+                
+                <div class="form-group row m-1">
+                    <label class="bmd-label-floating font-weight-bold">Agreement Status: </label>
+                    <ng-select
+                        [items]="SearchOptions.AgreementStatuses"
+                        [multiple]="true"
+                        [closeOnSelect]="false"
+                        [hideSelected]="true"
+                        bindLabel="AgreementStatusDesc"
+                        bindValue="AgreementStatusCode"
+                        placeholder="Select Type"
+                        loadingText="Loading...."
+                        dropdownPosition= 'bottom'
+                        [(ngModel)]="AgreementStatus"
+                        name="searchParams.AgreementStatus"
+                        class="shadow-sm bg-white"
+                        >
+                    </ng-select>
+                </div>
+
+                <div class="form-group row m-1">
+                    <label class="bmd-label-floating font-weight-bold">Agreement Type: </label>
+                    <ng-select
+                        [items]="SearchOptions.AgreementTypes"
+                        [multiple]="true"
+                        [closeOnSelect]="false"
+                        [hideSelected]="true"
+                        bindLabel="AgreementTypeDesc"
+                        bindValue="AgreementTypeCode"
+                        placeholder="Select Type"
+                        loadingText="Loading...."
+                        dropdownPosition= 'bottom'
+                        [(ngModel)]="searchParams.AgreementType"
+                        name="AgreementType"
+                        >
+                    </ng-select>
+                </div>
+
+                <div class="form-group row m-1">
+                    <label class="bmd-label-floating font-weight-bold">Rights Type: </label>
+                    <ng-select
+                        [items]="SearchOptions.AgreementRightsTypes"
+                        [multiple]="true"
+                        [closeOnSelect]="false"
+                        [hideSelected]="true"
+                        bindLabel="AgreementRightsTypeDesc"
+                        bindValue="AgreementRightsTypeCode"
+                        placeholder="Select Type"
+                        loadingText="Loading...."
+                        dropdownPosition= 'bottom'
+                        [(ngModel)]="searchParams.RightsType"
+                        name="RightsType"
+                        >
+                    </ng-select>
+                </div>
+
+                <div class="form-group row m-1">
+                    <label class="bmd-label-floating font-weight-bold">Geo Type: </label>
+                    <ng-select
+                        [items]="SearchOptions.GeoTypes"
+                        [multiple]="true"
+                        [closeOnSelect]="false"
+                        [hideSelected]="true"
+                        bindLabel="GeoTypeDesc"
+                        bindValue="GeoTypeCode"
+                        placeholder="Select Type"
+                        loadingText="Loading...."
+                        dropdownPosition= 'bottom'
+                        [(ngModel)]="searchParams.GeoCode"
+                        name="GeoCode"
+                        >
+                    </ng-select>
+                </div>
+
+                <div class="form-group row text-center m-1">
+                    <label class="col-form-label-sm font-weight-bold">Agreement Form:</label>
+                    <input name="AgreementForm" type="search" class="form-control form-control-sm shadow-sm bg-white" placeholder="Form" [(ngModel)]="searchParams.AgreementForm">
+                </div>
+
+                <div class="form-group row text-center m-1">
+                    <label class="col-form-label-sm font-weight-bold">Lessor</label>
+                    <input name="Lessor" type="number" class="form-control form-control-sm shadow-sm bg-white" placeholder="Lessor" [(ngModel)]="searchParams.Lessor">
+                </div>
+
+                <div class="form-group row text-center m-1">
+                    <label class="col-form-label-sm font-weight-bold">Lessee:</label>
+                    <input  name="Lessee" type="number" class="form-control form-control-sm shadow-s bg-white" placeholder="Lessee" [(ngModel)]="searchParams.Lessee">
+                </div>
+
+                <div class="form-group row text-center m-1">
+                  <div class="col-4">
+                    <label class="col-form-label-sm font-weight-bold">Book:</label>
+                    <input name="Book" type="text" class="form-control form-control-sm shadow-s bg-white" [(ngModel)]="searchParams.Book">
+                  </div>
+
+                  <div class="col-4">
+                    <label class="col-form-label-sm font-weight-bold">Page:</label>
+                    <input name="Page" type="text" class="form-control shadow-s bg-white" [(ngModel)]="searchParams.Page">
+                  </div>
+
+                  <div class="col-4">
+                    <label class="col-form-label-sm font-weight-bold">Entry:</label>
+                    <input name="Entry" type="text" class="form-control form-control-sm shadow-s bg-white" [(ngModel)]="searchParams.Entry">
+                  </div>
+                </div>
+
+                <div class="form-group row text-center m-1">
+                    <label class="col-form-label-sm font-weight-bold">Owner Name:</label>
+                    <input name="OwnerName" type="text" class="form-control form-control-sm shadow-sm bg-white" placeholder="Owner Name" [(ngModel)]="searchParams.OwnerName">
+                </div>
+
+              </div>
+              <!-- COLUMN #2 -->
+              <div class="col bg-light border shadow rounded p-2" style="border: 1px solid yellow">
+                  <div class="form-group row m-1">
+                    <div class="col-6 p-0">
+                      <label class="bmd-label-floating font-weight-bold">Division: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Select Type"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Division"
+                          name="Division"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                    </div>
+                    <div class="col-6 p-0">
+                      <label class="bmd-label-floating font-weight-bold">District: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Select Type"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.District"
+                          name="District"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Tract Statuses: </label>
+                      <ng-select
+                          [items]="SearchOptions.AgreementTractStatuses"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="AgreementTractStatusDesc"
+                          bindValue="AgreementTractStatusCode"
+                          placeholder="Select Type"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.AgreementTractStatus"
+                          name="AgreementTractStatus"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Tract Formations: </label>
+                      <ng-select
+                          [items]="SearchOptions.AgreementTractFormations"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel=""
+                          bindValue=""
+                          placeholder="No Options Yet"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Provisions: </label>
+                      <ng-select
+                          [items]="SearchOptions.AgreementProvisionTypes"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="AgreementProvisionTypeDesc"
+                          bindValue="AgreementProvisionTypeCode"
+                          placeholder="Select Type"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Provision"
+                          name="Provision"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Drop Reason: </label>
+                      <ng-select
+                          [items]="SearchOptions.AgreementDropReasons"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="DropReasonDesc"
+                          bindValue="DropReasonCode"
+                          placeholder="Select Type"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.DropReason"
+                          name="DropReason"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Lead Stage: </label>
+                      <ng-select
+                          [items]="SearchOptions.LeadStages"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="LeadStageDesc"
+                          bindValue="LeadStageCode"
+                          placeholder="Select Type"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Stages"
+                          name="Stages"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Lead Sub Stage: </label>
+                      <ng-select
+                          [items]="SearchOptions.LeadSubStages"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="LeadSubStageName"
+                          bindValue="LeadSubStageCode"
+                          placeholder="Select Type"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Cases: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Case"
+                          name="Case"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Check Status: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.CheckStatus"
+                          name="CheckStatus"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Company: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Company"
+                          name="Company"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">County: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.County"
+                          name="County"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">External Xref: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.ExternalXref"
+                          name="ExternalXref"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Formation: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Formation"
+                          name="Formation"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Landman: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Landman"
+                          name="Landman"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">BA: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.BA"
+                          name="BA"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Region: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Region"
+                          name="Region"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Stages: </label>
+                      <ng-select
+                          [items]="SearchOptions.LeadSubStages"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="LeadSubStageName"
+                          bindValue="LeadSubStageCode"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Stages"
+                          name="Stages"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Status: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Status"
+                          name="Status"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Unit: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Unit"
+                          name="Unit"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Well: </label>
+                      <ng-select
+                          [items]="TestData"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Not Correct Options"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Well"
+                          name="Well"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Yes/No: </label>
+                      <ng-select
+                          [items]="YesNo"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          bindLabel="name"
+                          bindValue="value"
+                          placeholder="Yes, No, or BOTH"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Yesno"
+                          name="Yesno"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+              </div>
+
+
+              <!-- COLUMN #3 -->
+              <div class="col bg-light border shadow rounded p-2" style="border: 1px solid orangered">
+
+                  <div class="form-group row m-1">
+                      <label class="bmd-label-floating font-weight-bold">Team: </label>
+                      <ng-select
+                          [items]=""
+                          [multiple]="false"
+                          [closeOnSelect]="true"
+                          [hideSelected]="true"
+                          bindLabel=""
+                          bindValue=""
+                          placeholder="Yes, No, or BOTH"
+                          loadingText="Loading...."
+                          dropdownPosition= 'bottom'
+                          [(ngModel)]="searchParams.Team"
+                          name="Team"
+                          class="shadow-sm bg-white"
+                          >
+                      </ng-select>
+                  </div>
+
+                  <div class="form-group row text-center m-1">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Abstract:</label>
+                      <input name="Abstract" type="text" class="form-control shadow-sm bg-white " placeholder="Abstract" [(ngModel)]="searchParams.Abstract">
+                  </div>
+
+                  <div class="form-group row text-center m-1">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Block:</label>
+                      <input name="Block" type="text" class="form-control shadow-sm bg-white " placeholder="Block" [(ngModel)]="searchParams.Block">
+                    </div>
+
+                    <div class="form-group row text-center m-1">
+                        <label class="col-form-label-sm font-weight-bold pb-0">Check Number:</label>
+                        <input name="Checkno" type="text" class="form-control shadow-sm bg-white " placeholder="Check Number" [(ngModel)]="searchParams.Checkno">
+                    </div>
+
+                    <div class="form-group row text-center m-1">
+                        <label class="col-form-label-sm font-weight-bold pb-0">Comments:</label>
+                        <input name="Comments" type="text" class="form-control shadow-sm bg-white " placeholder="Comments" [(ngModel)]="searchParams.Comments">
+                    </div>
+
+                    <div class="form-group row text-center m-1">
+                        <label class="col-form-label-sm font-weight-bold pb-0">Depth Remark:</label>
+                        <input name="DepthRemark" type="text" class="form-control shadow-sm bg-white" placeholder="Depth Remark" [(ngModel)]="searchParams.DepthRemark">
+                    </div>
+
+                    <div class="form-group row text-center m-1">
+                        <label class="col-form-label-sm font-weight-bold pb-0">External:</label>
+                        <input name="External" type="text" class="form-control shadow-sm bg-white " placeholder="External" [(ngModel)]="searchParams.External">
+                    </div>
+
+                    <div class="form-group row text-center m-1">
+                        <label class="col-form-label-sm font-weight-bold pb-0">First Assn Rcvd Notes:</label>
+                        <input name="FirstAssnRcvdNotes" type="text" class="form-control shadow-sm bg-white " placeholder="Notes" [(ngModel)]="searchParams.FirstAssnRcvdNotes">
+                    </div>
+
+                    <div class="form-group row text-center m-1">
+                        <label class="col-form-label-sm font-weight-bold pb-0">First Party:</label>
+                        <input name="FirstParty" type="text" class="form-control shadow-sm bg-white " placeholder="First Party" [(ngModel)]="searchParams.FirstParty">
+                    </div>
+
+                    <div class="form-group row text-center m-1">
+                        <label class="col-form-label-sm font-weight-bold pb-0">Second Party:</label>
+                        <input name="SecondParty" type="text" class="form-control shadow-sm bg-white " placeholder="Second Party" [(ngModel)]="searchParams.SecondParty">
+                    </div>
+
+                    <div class="form-group row text-center m-1">
+                        <label class="col-form-label-sm font-weight-bold pb-0">From:</label>
+                        <input name="AgreementNumber" type="text" class="form-control shadow-sm bg-white " placeholder="From" [(ngModel)]="searchParams.From">
+                    </div>
+
+                    <div class="form-group row text-center m-1">
+                        <label class="col-form-label-sm font-weight-bold pb-0">Invoice Number:</label>
+                        <input name="InvoiceNumber" type="text" class="form-control shadow-sm bg-white " placeholder="Invoice Number" [(ngModel)]="searchParams.InvoiceNumber">
+                    </div>
+
+                    <div class="form-group row text-center m-1">
+                        <label class="col-form-label-sm font-weight-bold pb-0">Payee Name:</label>
+                        <input name="Payeename" type="text" class="form-control shadow-sm bg-white " placeholder="Payee Name" [(ngModel)]="searchParams.Payeename">
+                    </div>
+
+                    <div class="form-group row text-center m-1">
+                        <label class="col-form-label-sm font-weight-bold pb-0">Provision Remark:</label>
+                        <input name="ProvisionRemark" type="number" class="form-control shadow-sm bg-white " placeholder="Provision Remark" [(ngModel)]="searchParams.ProvisionRemark">
+                    </div>
+
+                  <div class="form-group row text-center m-1">
+                      <div class="col-2 p-0 ml-2">
+                          <label class="col-form-label-sm font-weight-bold pb-0">Sec:</label>
+                          <input name="Sec" type="text" class="form-control shadow-sm bg-white " [(ngModel)]="searchParams.Sec">
+                      </div>
+                      <div class="col-2 p-0 ml-1">
+                          <label class="col-form-label-sm font-weight-bold pb-0">Twnshp:</label>
+                          <input name="Twnshp" type="number" class="form-control shadow-sm bg-white " [(ngModel)]="searchParams.Twnshp">
+                      </div>
+                      <div class="col-2 p-0 ml-1">
+                          <label class="col-form-label-sm font-weight-bold pb-0">Dir:</label>
+                          <input name="TwnshpDir" type="text" class="form-control shadow-sm bg-white " [(ngModel)]="searchParams.TwnshpDir">
+                      </div>
+                      <div class="col-2 p-0 ml-1">
+                          <label class="col-form-label-sm font-weight-bold pb-0">Range:</label>
+                          <input name="Range" type="number" class="form-control shadow-sm bg-white" [(ngModel)]="searchParams.Range">
+                      </div>
+                      <div class="col-2 p-0 ml-1">
+                          <label class="col-form-label-sm font-weight-bold pb-0">Dir:</label>
+                          <input name="RangeDir" type="text" class="form-control shadow-sm bg-white " [(ngModel)]="searchParams.RangeDir">
+                      </div>
+                  </div>
+
+                  <div class="form-group row text-center m-1">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Survey:</label>
+                      <input name="Survey" type="text" class="form-control shadow-sm bg-white " placeholder="Survey" [(ngModel)]="searchParams.Survey">
+                  </div>
+
+                  <div class="form-group row text-center m-1">
+                      <label class="col-form-label-sm font-weight-bold pb-0">To:</label>
+                      <input name="To" type="text" class="form-control shadow-sm bg-white " placeholder="To" [(ngModel)]="searchParams.To">
+                  </div>
+              </div>
+              
+
+              <!-- CLOUMN #4 -->
+              <div class="col bg-light border shadow rounded p-2" style="border: 1px solid green">
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Actual Close Date:</label>
+                      <div>
+                          <my-date-picker name="StartActualCloseDate" [options]="myDatePickerOptions" [placeholder]="Start" [(ngModel)]="searchParams.StartActualCloseDate"></my-date-picker>
+                          <my-date-picker name="EndActualCloseDate" [options]="myDatePickerOptions" placeholder="End Date" [(ngModel)]="searchParams.EndActualCloseDate"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Assn Delivered:</label>
+                      <div>
+                          <my-date-picker name="StartASSNDel" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartASSNDel"></my-date-picker>
+                          <my-date-picker name="EndASSNDel" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndASSNDel"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Assn Received:</label>
+                      <div>
+                          <my-date-picker name="StartAssnReceived" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartAssnReceived"></my-date-picker>
+                          <my-date-picker name="EndAssnReceived" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndAssnReceived"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Check Date:</label>
+                      <div>
+                          <my-date-picker name="StartCheckDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartCheckDate"></my-date-picker>
+                          <my-date-picker name="EndCheckDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndCheckDate"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Agreement Date:</label>
+                      <div>
+                          <my-date-picker name="StartAgreementDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartAgreementDate"></my-date-picker>
+                          <my-date-picker name="EndAgreementDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndAgreementDate"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Agreement Entered:</label>
+                      <div>
+                          <my-date-picker name="StartAgreementEnt" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartAgreementEnt"></my-date-picker>
+                          <my-date-picker name="EndAgreementEnt" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndAgreementEnt"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Agreement Expiration:</label>
+                      <div>
+                          <my-date-picker name="StartAgreementExp" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartAgreementExp"></my-date-picker>
+                          <my-date-picker name="EndAgreementExp" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndAgreementExp"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Drop Date:</label>
+                      <div>
+                          <my-date-picker name="StartDropDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartDropDate"></my-date-picker>
+                          <my-date-picker name="EndDropDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndDropDate"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Effective Date:</label>
+                      <div>
+                          <my-date-picker name="StartEffectiveDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartEffectiveDate"></my-date-picker>
+                          <my-date-picker name="EndEffectiveDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndEffectiveDate"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Geo Code Date:</label>
+                      <div>
+                          <my-date-picker name="StartGeoCodeDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartGeoCodeDate"></my-date-picker>
+                          <my-date-picker name="EndGeoCodeDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndGeoCodeDate"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Modified Record:</label>
+                      <div>
+                          <my-date-picker name="StartModifiedRecord" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartModifiedRecord"></my-date-picker>
+                          <my-date-picker name="EndModifiedRecord" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndModifiedRecord"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Next Obligation:</label>
+                      <div>
+                          <my-date-picker name="StartNextObl" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartNextObl"></my-date-picker>
+                          <my-date-picker name="EndNextObl" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndNextObl"></my-date-picker>
+                      </div>
+                  </div>
+                  <div class="form-group m-0">
+                      <label class="bmd-label-floating font-weight-bold">Tr Drop Date:</label>
+                      <div>
+                          <my-date-picker name="StartTrDropDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.StartTrDropDate"></my-date-picker>
+                          <my-date-picker name="EndTrDropDate" [options]="myDatePickerOptions" [(ngModel)]="searchParams.EndTrDropDate"></my-date-picker>
+                      </div>
+                  </div>
+
+              </div>
+            </div>
+            <div class="row bg-light border shadow rounded mt-2 pt-1 text-center">
+
+                <div class="col-xl-2 col-md-2 ml-4">
+                  <h6>Approval Required?</h6>
+                  <div class="">
+                    <div class="checkbox checkbox-primary d-inline">
+                      <input type="checkbox" name="ApprovalRequired" id="ApprovalRequired" [(ngModel)]="searchParams.ApprovalRequired">
+                      <label for="ApprovalRequired" class="cr"></label>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-xl-2 col-md-2 ml-4">
+                    <h6>Count Acres?</h6>
+                    <div class="">
+                      <div class="checkbox checkbox-primary d-inline">
+                        <input type="checkbox" name="CountAcre" id="CountAcre" [(ngModel)]="searchParams.CountAcre">
+                        <label for="CountAcre" class="cr"></label>
+                      </div>
+                    </div>
+                </div>
+    
+                <div class="col-xl-2 col-md-2 ml-4">
+                    <h6>D.O. Received?</h6>
+                    <div class="form-group">
+                      <div class="checkbox checkbox-primary d-inline">
+                        <input type="checkbox" name="DOReceived" id="DOReceived" [(ngModel)]="searchParams.DOReceived" >
+                        <label for="DOReceived" class="cr"></label>
+                      </div>
+                    </div>
+                </div>
+    
+                <div class="col-xl-2 col-md-2 ml-4">
+                    <h6>Lead?</h6>
+                    <div class="">
+                      <div class="checkbox checkbox-primary d-inline">
+                        <input type="checkbox" name="Lead" id="Lead" [(ngModel)]="searchParams.Lead">
+                        <label for="Lead" class="cr"></label>
+                      </div>
+                    </div>
+                </div>
+    
+                <div class="col-xl-2 col-md-2 ml-4">
+                    <h6>Owned?</h6>
+                    <div class="">
+                      <div class="checkbox checkbox-primary d-inline">
+                        <input type="checkbox" name="Owned" id="Owned" [(ngModel)]="searchParams.Owned">
+                        <label for="Owned" class="cr"></label>
+                      </div>
+                    </div>
+                </div>
+            </div>
+      </form>
+    </app-card>
+
+    <div class="card m-0">
+            <div>
+                Selected: {{ SelectedAgreements | json}}
+            </div>
+            <div class="card-body">
+                    <button (click)="searchAgreements()" [placement]="'bottom'" ngbTooltip="Search Agreements" type="button" class="btn btn-success toolbar-btn"><i class="fa fa-search"></i>Search</button>
+                    <button (click)="redrawAllRows()" [placement]="'bottom'" ngbTooltip="Refresh Table" type="button" class="btn btn-light toolbar-btn"><i class="fa fa-sync m-0 p-0 mt-1"></i></button>
+                    <button [placement]="'bottom'" ngbTooltip="Full Screen" type="button" class="btn btn-light toolbar-btn"><i class="fa fa-expand m-0 p-0 mt-1"></i></button>
+                    <div class="btn-group mb-1 mr-2" ngbDropdown [placement]="'bottom-left'">
+                        <button type="button" class="btn btn-light toolbar-btn" [placement]="'bottom'" ngbTooltip="Exports"><i class="fa fa-file-download fa-lg"></i>Exports</button>
+                        <button type="button" class="btn btn-light dropdown-toggle-split" ngbDropdownToggle><span class="sr-only">Toggle Dropdown</span></button>
+                        <div ngbDropdownMenu>
+                          <a class="dropdown-item" href="javascript:">Acreage</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Acreage Summary</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Payment Obligations</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">General Obligations</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Expirations</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Expirations with Ownership</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Weekly Closings</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Lease Ownership</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Leads & Leases</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Leads & Leases with Ownership</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">DO Tracker</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Provisions</a>
+                        </div>
+                    </div>
+                    <div class="btn-group mb-1 mr-2" ngbDropdown [placement]="'bottom-left'">
+                        <button type="button" class="btn btn-light toolbar-btn" [placement]="'bottom'" ngbTooltip="Generate Reports"><i class="fa fa-chart-bar fa-lg"></i>Reports</button>
+                        <button type="button" class="btn btn-light dropdown-toggle-split" ngbDropdownToggle><span class="sr-only">Toggle Dropdown</span></button>
+                        <div ngbDropdownMenu>
+                          <a class="dropdown-item" href="javascript:">Acreage</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Exhibit A</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Payment Obligations</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">General Obligations</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Expirations</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Rental Receipts</a>
+                        </div>
+                    </div>
+                    <div class="btn-group mb-1 mr-2" ngbDropdown [placement]="'bottom-left'">
+                        <button type="button" class="btn btn-light toolbar-btn"><i class="fa fa-exchange-alt" [placement]="'bottom'" ngbTooltip="Mass Change"></i>Mass Change</button>
+                        <button type="button" class="btn btn-light dropdown-toggle-split" ngbDropdownToggle><span class="sr-only">Toggle Dropdown</span></button>
+                        <div ngbDropdownMenu>
+                          <a class="dropdown-item" href="javascript:">Cross References</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Refresh Counts</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Change Tract Status</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Change Lease Status</a>
+                        </div>
+                    </div>
+                    <div class="btn-group mb-1 mr-2" ngbDropdown [placement]="'bottom-left'">
+                        <button type="button" class="btn btn-light toolbar-btn"><i class="fa fa-file-upload" [placement]="'bottom'" ngbTooltip="Upload Search"></i>Upload Search</button>
+                        <button type="button" class="btn btn-light dropdown-toggle-split" ngbDropdownToggle><span class="sr-only">Toggle Dropdown</span></button>
+                        <div ngbDropdownMenu>
+                          <a class="dropdown-item" href="javascript:">Action</a>
+                          <a class="dropdown-item" href="javascript:">Another action</a>
+                          <a class="dropdown-item" href="javascript:">Something else here</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:">Separated link</a>
+                        </div>
+                    </div>
+                <ag-grid-angular
+                  #agGrid
+                  style="width: 100%; height: 40em;" 
+                  class="ag-theme-balham"
+                  [debug]=" true"
+                  [rowData]="rowData" 
+                  [columnDefs]="columnDefs"
+                  [defaultColDef]="defaultColDef"
+                  [rowSelection]="rowSelection"
+                  [pagination] = "true"
+                  [paginationPageSize]="paginationPageSize"
+                  [paginationNumberFormatter]="paginationNumberFormatter"
+                  [debug]= "true"
+                  [pivotPanelShow]="pivotPanelShow"
+                  [floatingFilter]="true"
+                  [animateRows]="true"
+                  [icons]="icons"
+                  [colResizeDefault]="colResizeDefault"
+                  [rowHeight]="rowHeight"
+                  [frameworkComponents]="frameworkComponents"
+                  (firstDataRendered)="onFirstDataRendered($event)"
+                  (gridReady)="onGridReady($event)"
+                  (selectionChanged)="onSelectionChanged($event)"
+                  (paginationChanged)="onPaginationChanged($event)"
+                  >
+                </ag-grid-angular>
+                <div class="form-inline float-right">
+                    <div class=" form-group">
+                      <label class="font-weight-bold">Size:</label>
+                      <select  id="page-size" class="form-control page-option ml-1 mb-1" (change)="onPageSizeChanged($event)">
+                            <option value="10" selected="">10</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="250">250</option>
+                        </select>
+                    </div>
+                    <div class=" form-group ml-2">
+                        <label for="AgreementNumber" class="font-weight-bold">Page:</label>
+                        <select id="current-page" class="form-control page-option ml-1 mb-1" (change)="goToPage($event)">
+                                <option *ngFor="let page of totalPages" value="{{page}}">{{ page }}</option>
+                        </select> 
+                    </div>
+                    <div class="horizontal-scroll d-flex justify-content-end"><ngb-pagination [collectionSize]="120" [(page)]="advancePage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" size="sm"></ngb-pagination></div>
+                </div>
+            </div>
+        </div>
+  </div>
+ 
+

@@ -1,0 +1,48 @@
+<div class="row col-12">
+    <button (click)="modalDefault.show()" ngbTooltip="Comment" type="button" class="btn btn-sm btn-light ml-auto"><i class="fa fa-plus-square"></i>New Comment</button>
+</div>
+<hr>
+<div class="col-12">
+    <div *ngIf="!Comments" class="text-center">
+            <h5>No Comments At This Time</h5>
+            <app-spinner></app-spinner>
+    </div>
+    <div *ngIf="Comments" class="">
+      <div *ngFor="let comment of Comments" class="card bg-light mb-2 border rounded">
+        <div class="ml-auto">
+          <a href="javascript:" class="mr-2"><span>Edit<i class="fa fa-pencil-square-o ml-1" aria-hidden="true"></i></span></a>
+          <a href="javascript:" class="mr-4"><span>Delete<i class="fa fa-trash ml-1" aria-hidden="false" ngbTooltip="Comment"></i></span></a>
+        </div>
+        <div class="bg-primary text-white border border-white rounded p-1 m-1">
+          <p class="font-weight-bold">"{{ comment.AgreementCommentText }}"</p>
+        </div>
+        <p class="ml-2">
+          <span class="font-weight-bold">{{ comment.CreatedBy }}</span>
+          <br>
+          <small class="font-italic">- {{ comment.CreatedDate }}</small> 
+        </p>
+      </div>
+    </div>
+</div>
+
+
+
+
+<app-ui-modal #modalDefault>
+  <div class="app-modal-header">
+    <h5 class="modal-title">Create New Comment</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="modalDefault.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body">
+    {{ commentText | json }}
+    <div class="form-group">
+        <form>
+            <textarea class="form-control" name="newComment" rows="3" [(ngModel)]="commentText" ></textarea>
+        </form>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" (click)="modalDefault.hide()"><i class="far fa-window-close"></i>Cancel</button>
+    <button type="button" class="btn btn-sm btn-success" (click)="createComment()" (click)="modalDefault.hide()"><i class="far fa-plus-square"></i>Add Comment</button>
+  </div>
+</app-ui-modal>

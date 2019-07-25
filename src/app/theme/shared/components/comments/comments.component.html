@@ -3,15 +3,14 @@
 </div>
 <hr>
 <div class="col-12">
-    <div *ngIf="!Comments" class="text-center">
-            <h5>No Comments At This Time</h5>
-            <app-spinner></app-spinner>
+    <div *ngIf="!thereAreComments" class="text-center">
+        <h5>No Comments At This Time</h5>
     </div>
-    <div *ngIf="Comments" class="">
+    <div *ngIf="thereAreComments" class="">
       <div *ngFor="let comment of Comments" class="card bg-light mb-2 border rounded">
         <div class="ml-auto">
-          <a href="javascript:" class="mr-2"><span>Edit<i class="fa fa-pencil-square-o ml-1" aria-hidden="true"></i></span></a>
-          <a href="javascript:" class="mr-4"><span>Delete<i class="fa fa-trash ml-1" aria-hidden="false" ngbTooltip="Comment"></i></span></a>
+          <a href="javascript:" class="mr-2" (click)="getComment(ID, comment.AgreementCommentID)"><span>Edit<i class="fa fa-pencil-square-o ml-1" aria-hidden="true"></i></span></a>
+          <a href="javascript:" class="mr-4" (click)="deleteComment(ID, comment.AgreementCommentID)"><span>Delete<i class="fa fa-trash ml-1" aria-hidden="false" ngbTooltip="Comment"></i></span></a>
         </div>
         <div class="bg-primary text-white border border-white rounded p-1 m-1">
           <p class="font-weight-bold">"{{ comment.AgreementCommentText }}"</p>

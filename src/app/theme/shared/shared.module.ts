@@ -16,6 +16,7 @@ import { FileUploadModule } from '@iplab/ngx-file-upload'
 import 'hammerjs';
 import 'mousetrap';
 import { CommentsModule } from './components/comments/comments.module';
+import { RelatedPartiesComponent } from './components/related-parties/related-parties.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -58,7 +59,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SpinnerComponent,
     EditTabsComponent,
     CommentsComponent,
-    FilesUploadComponent
+    FilesUploadComponent,
+    RelatedPartiesComponent
   ],
   providers: [
     {

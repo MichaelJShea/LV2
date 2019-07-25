@@ -16,14 +16,18 @@ export class CommentsComponent implements OnInit {
   private UserID;
   private Comments;
   private newComment:AgreementComment;
+  private commentToEdit: AgreementComment; 
   private commentText;
+  private thereAreComments: Boolean; 
   
 
   constructor( private _agreementService: AgreementService) { 
     this.newComment = new AgreementComment;
     this.commentText = null;
     this.UserID = 0;
-    this.Comments = null
+    this.thereAreComments= false;
+    this.commentToEdit = new AgreementComment;
+
 
   }
 
@@ -46,15 +50,27 @@ export class CommentsComponent implements OnInit {
       }
       this.Comments = data;
       console.log("Got Comments:", this.Comments)
+      if(this.Comments.length > 0){
+        this.thereAreComments = true; 
+      }
     })
   }
 
-  createComment(id: Number = this.ID, comment: AgreementComment = this.newComment, text = this.commentText, userId = this.UserID){
+  getComment(id:Number, commentId: Number){
+    let comment = this._agreementService.getAgreementComment(id, commentId);
+    comment.subscribe((data: AgreementComment) => {
+      this.commentToEdit = data;
+      console.log("Got Comment", this.commentToEdit);
+    })
+  }
+
+  createComment(id: Number = this.ID, comment =  this.newComment, text = this.commentText, userId = this.UserID){
     comment.AgreementCommentText = text;
     console.log("Comment Being Created", comment);
     let newComment = this._agreementService.createAgreementComment(id, comment, userId);
     newComment.subscribe(data => {
       console.log(data);
+      this.newComment.AgreementCommentText = ""; 
       this.getComments(id);
     })
   }
@@ -64,9 +80,11 @@ export class CommentsComponent implements OnInit {
   }
 
   deleteComment(agreementId: Number, commentId: Number){
-    var comment = this._agreementService.deleteAgreementComment(agreementId ,commentId);
-    comment.subscribe(data => {
-      console.log(data, "HAS BEEN DELETED");
+    let deleteComment = this._agreementService.deleteAgreementComment(agreementId ,commentId);
+    console.log(deleteComment)
+    deleteComment.subscribe(data => {
+      console.log("Comment Been Did DELETED", data);
+      this.getComments(agreementId);
     })
   }
   

@@ -49,6 +49,10 @@ export class AgreementService {
     return this._http.get(`https://localhost:44390/api/agreements/${agreementId}/comments`);
   }
 
+  getAgreementComment(agreementId, commentId){
+    return this._http.get(`https://localhost:44390/api/agreements/${agreementId}/comments/${commentId}`)
+  }
+
   updateAgreementComment(agreementId, commentId, comment){
     return this._http.patch(`https://localhost:44390/api/agreements/${agreementId}/comments/${commentId}`, comment);
   }

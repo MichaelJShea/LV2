@@ -5,6 +5,7 @@ import { Params, Router, ActivatedRoute} from '@angular/router';
 import  * as moment from 'moment';
 import {ToastData, ToastOptions, ToastyService} from 'ng2-toasty';
 
+import { Agreement } from '../../models/agreements/agreement'
 
 
 @Component({
@@ -13,105 +14,8 @@ import {ToastData, ToastOptions, ToastyService} from 'ng2-toasty';
   styleUrls: ['./agreements-edit.component.scss']
 })
 export class AgreementsEditComponent implements OnInit {
-  DTOAgreement: object = {
-    AgreementNumber: 'AgreementNumber',
-    AltAgreementNumber: 'AltAgreementNumber',
-    AgreementName: 'AgreementName',
-    ShortDesc: 'ShortDesc',
-    FirstParty: 'FirstParty',
-    SecondParty: 'SecondParty',
-    AgreementClassCode: 'AgreementClassCode',
-    AgreementTypeCode: 'AgreementTypeCode',
-    AgreementRightsTypeCode: 'AgreementRightsTypeCode',
-    AgreementStatusCode: 'AgreementStatusCode',
-    AgreementForm: 'AgreementForm',
-    AgreementGroupFormCode: 'AgreementGroupFormCode',
-    AgreementDate: 'AgreementDate',
-    EffectiveDate: 'EffectiveDate',
-    Term: 'Term',
-    TermUnit: 'TermUnit',
-    ExpireDate_Calc: 'ExpireDate_Calc',
-    ExtendedExpDate: 'ExtendedExpDate',
-    DropReasonCode: 'DropReasonCode',
-    DropDate: 'DropDate',
-    AssnReceivedDate: 'AssnReceivedDate',
-    AssnReceivedComment: 'AssnReceivedComment',
-    AssnDeliveredDate: 'AssnDeliveredDate',
-    AssnDeliveredComment: 'AssnDeliveredComment',
-    SourceDeedDate: 'SourceDeedDate',
-    LAGSignedDate: 'LAGSignedDate',
-    DueDiligenceDate: 'DueDiligenceDate',
-    ActualCloseDate: 'ActualCloseDate',
-    AgreementLegal: 'AgreementLegal',
-    GrossAcres_Calc: 'GrossAcres_Calc',
-    ReportedGrossAcres_Calc: 'ReportedGrossAcres_Calc',
-    NetAcres_Calc: 'NetAcres_Calc',
-    GroupAcres_Calc: 'GroupAcres_Calc',
-    CompanyAcres_Calc: 'CompanyAcres_Calc',
-    CompanyNRIAcres_Calc: 'CompanyNRIAcres_Calc',
-    AcquisitionCost_Calc: 'AcquisitionCost_Calc',
-    ProvisionSummary_Calc: 'ProvisionSummary_Calc',
-    ProvisionCommentSummary_Calc: 'ProvisionCommentSummary_Calc',
-    NextObligationDate: 'NextObligationDate',
-    AgreementXrefCount: 'AgreementXrefCount',
-    WellXrefCount: 'WellXrefCount',
-    Landman: 'Landman',
-    TeamID: 'TeamID',
-    Lead: 'Lead',
-    LeadSubStage: 'LeadSubStage',
-    Owned: 'Owned',
-    SrcDesc: 'SrcDesc'
 
-  }
-  agreement: object = {
-    AgreementNumber: null,
-    AltAgreementNumber: null,
-    AgreementName: null,
-    ShortDesc: null,
-    FirstParty: null,
-    SecondParty: null,
-    AgreementClassCode: null,
-    AgreementTypeCode: null,
-    AgreementRightsTypeCode: null,
-    AgreementStatusCode: null,
-    AgreementForm: null,
-    AgreementGroupFormCode: null,
-    AgreementDate: null,
-    EffectiveDate: null,
-    Term: null,
-    TermUnit: null,
-    ExpireDate_Calc: null,
-    ExtendedExpDate: null,
-    DropReasonCode: null,
-    DropDate: null,
-    AssnReceivedDate: null,
-    AssnReceivedComment: null,
-    AssnDeliveredDate: null,
-    AssnDeliveredComment: null,
-    SourceDeedDate: null,
-    LAGSignedDate: null,
-    DueDiligenceDate: null,
-    ActualCloseDate: null,
-    AgreementLegal: null,
-    GrossAcres_Calc: null,
-    ReportedGrossAcres_Calc: null,
-    NetAcres_Calc: null,
-    GroupAcres_Calc: 0,
-    CompanyAcres_Calc: 0,
-    CompanyNRIAcres_Calc: 0,
-    AcquisitionCost_Calc: 0,
-    ProvisionSummary_Calc: 0,
-    ProvisionCommentSummary_Calc: 0,
-    NextObligationDate: null,
-    AgreementXrefCount: null,
-    WellXrefCount: null,
-    Landman: null,
-    TeamID: null,
-    Lead: null,
-    LeadSubStage: null,
-    Owned: null,
-    SrcDesc: null
-  }
+  agreement: Agreement;
   agreementComments: any;
   agreementTracts: any;
   agreementProvisions: any;
@@ -137,7 +41,6 @@ export class AgreementsEditComponent implements OnInit {
     { description: 'Months', value: 'M'},
     { description: 'Years', value: 'Y' }
   ]
-
   position = 'bottom-right';
   title: string;
   msg: string;
@@ -146,14 +49,62 @@ export class AgreementsEditComponent implements OnInit {
   type = 'default';
   closeOther = false;
 
-  constructor(
-    private _agreementService: AgreementService,
-    private _router: Router,
-    private _route: ActivatedRoute,
-    private toastyService: ToastyService
-    ) { }
+  constructor(private _agreementService: AgreementService,private _router: Router, private _route: ActivatedRoute,private toastyService: ToastyService) {
+    this.agreement = {
+      AgreementID: null,
+      AgreementNumber: null,
+      AltAgreementNumber: null,
+      AgreementName: null,
+      ShortDesc: null,
+      FirstParty: null,
+      SecondParty: null,
+      AgreementClassCode: null,
+      AgreementTypeCode: null,
+      AgreementRightsTypeCode: null,
+      AgreementStatusCode: null,
+      AgreementForm: null,
+      AgreementGroupFormCode: null,
+      AgreementDate: null,
+      EffectiveDate: null,
+      Term: null,
+      TermUnit: null,
+      ExpireDate_Calc: null,
+      ExtendedExpDate: null,
+      DropReasonCode: null,
+      DropDate: null,
+      AssnReceivedDate: null,
+      AssnReceivedComment: null,
+      AssnDeliveredDate: null,
+      AssnDeliveredComment: null,
+      SourceDeedDate: null,
+      LAGSignedDate: null,
+      DueDiligenceDate: null,
+      ActualCloseDate: null,
+      AgreementLegal: null,
+      GrossAcres_Calc: null,
+      ReportedGrossAcres_Calc: null,
+      NetAcres_Calc: null,
+      GroupAcres_Calc: 0,
+      CompanyAcres_Calc: 0,
+      CompanyNRIAcres_Calc: 0,
+      AcquisitionCost_Calc: 0,
+      ProvisionSummary_Calc: 0,
+      NextObligationDate: null,
+      AgreementXrefCount: null,
+      WellXrefCount: null,
+      LandMan: null,
+      TeamID: null,
+      Lead: null,
+      LeadSubStageCode: null,
+      Owned: null,
+      SrcDesc: null,
+      CreatedBy: null,
+      ModifiedBy: null
+    }
+  }
 
   ngOnInit() {
+    console.log(this.agreement); 
     this.DoesAgreementExisit();
     if(this.agreementExists){
       this.getAgreement(this.agreementId)
@@ -166,13 +117,13 @@ export class AgreementsEditComponent implements OnInit {
     let existingAgreement = this._agreementService.getAgreement(id);
     existingAgreement.subscribe(data => {
       for(var key in data){
+        this.agreement[key] = data[key];
         if(key == this.dateDic[key]){
           let date = moment(data[key]).format('YYYY-MM-DD');
           data[key] = date;
         }
       }
-      this.agreement = data;
-      console.log(this.agreement)
+      console.log("Agreement", this.agreement)
     })
 
   }
@@ -184,7 +135,7 @@ export class AgreementsEditComponent implements OnInit {
     })
   }
 
-  saveAgreement(agreement = this.agreement, agreementID = this.agreementId){
+  saveAgreement(agreement , agreementID = this.agreementId){
 
     if(agreementID){
       let body  = [
@@ -246,6 +197,11 @@ export class AgreementsEditComponent implements OnInit {
       console.log("COMMENTS", comments);
       this.agreementComments = comments
     })
+  }
+
+  deleteAgreementComment(agreementId ,commentId){
+    this._agreementService.deleteAgreementComment(agreementId, commentId); 
+    this.getAgreementComments(agreementId);
   }
 
   getAgreementTracts(agreementId){

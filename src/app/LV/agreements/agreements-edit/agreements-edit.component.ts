@@ -5,7 +5,9 @@ import { Params, Router, ActivatedRoute} from '@angular/router';
 import  * as moment from 'moment';
 import {ToastData, ToastOptions, ToastyService} from 'ng2-toasty';
 
-import { Agreement } from '../../models/agreements/agreement'
+import { Agreement } from '../../models/agreements/agreement';
+import { AgreementComment } from '../../models/agreements/agreement-comment';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -16,7 +18,7 @@ import { Agreement } from '../../models/agreements/agreement'
 export class AgreementsEditComponent implements OnInit {
 
   agreement: Agreement;
-  agreementComments: any;
+  agreementComments: AgreementComment[];
   agreementTracts: any;
   agreementProvisions: any;
   agreementXrefs: any;
@@ -50,57 +52,7 @@ export class AgreementsEditComponent implements OnInit {
   closeOther = false;
 
   constructor(private _agreementService: AgreementService,private _router: Router, private _route: ActivatedRoute,private toastyService: ToastyService) {
-    this.agreement = {
-      AgreementID: null,
-      AgreementNumber: null,
-      AltAgreementNumber: null,
-      AgreementName: null,
-      ShortDesc: null,
-      FirstParty: null,
-      SecondParty: null,
-      AgreementClassCode: null,
-      AgreementTypeCode: null,
-      AgreementRightsTypeCode: null,
-      AgreementStatusCode: null,
-      AgreementForm: null,
-      AgreementGroupFormCode: null,
-      AgreementDate: null,
-      EffectiveDate: null,
-      Term: null,
-      TermUnit: null,
-      ExpireDate_Calc: null,
-      ExtendedExpDate: null,
-      DropReasonCode: null,
-      DropDate: null,
-      AssnReceivedDate: null,
-      AssnReceivedComment: null,
-      AssnDeliveredDate: null,
-      AssnDeliveredComment: null,
-      SourceDeedDate: null,
-      LAGSignedDate: null,
-      DueDiligenceDate: null,
-      ActualCloseDate: null,
-      AgreementLegal: null,
-      GrossAcres_Calc: null,
-      ReportedGrossAcres_Calc: null,
-      NetAcres_Calc: null,
-      GroupAcres_Calc: 0,
-      CompanyAcres_Calc: 0,
-      CompanyNRIAcres_Calc: 0,
-      AcquisitionCost_Calc: 0,
-      ProvisionSummary_Calc: 0,
-      NextObligationDate: null,
-      AgreementXrefCount: null,
-      WellXrefCount: null,
-      LandMan: null,
-      TeamID: null,
-      Lead: null,
-      LeadSubStageCode: null,
-      Owned: null,
-      SrcDesc: null,
-      CreatedBy: null,
-      ModifiedBy: null
-    }
+    this.agreement = new Agreement
   }
 
   ngOnInit() {
@@ -115,7 +67,7 @@ export class AgreementsEditComponent implements OnInit {
 
   getAgreement(id){
     let existingAgreement = this._agreementService.getAgreement(id);
-    existingAgreement.subscribe(data => {
+    existingAgreement.subscribe((data:Agreement)  => {
       for(var key in data){
         this.agreement[key] = data[key];
         if(key == this.dateDic[key]){
@@ -193,7 +145,7 @@ export class AgreementsEditComponent implements OnInit {
 
   getAgreementComments(agreementId){
     let comments = this._agreementService.getAgreementComments(agreementId);
-    comments.subscribe(comments => {
+    comments.subscribe((comments: AgreementComment[]) => {
       console.log("COMMENTS", comments);
       this.agreementComments = comments
     })

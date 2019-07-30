@@ -206,27 +206,27 @@
                 <ngb-tabset type="pills">
                   <ngb-tab title="Tracts" class="mb-3">
                     <ng-template ngbTabContent>
-                      <h5>Tracts Go Here</h5>
+                      <app-tracts [ID]="agreementId"></app-tracts>
                     </ng-template>
                   </ngb-tab>
                   <ngb-tab title="Provisions">
                     <ng-template ngbTabContent>
-                      <h5>Provisions Go Here</h5>
+                      <app-provisions [ID]=agreementId></app-provisions>
                     </ng-template>
                   </ngb-tab>
                   <ngb-tab title="Cross References">
                     <ng-template ngbTabContent>
-                      <h5>X Refs Go here</h5>
+                      <app-x-refs [ID]=agreementId></app-x-refs>
                     </ng-template>
                   </ngb-tab>
                   <ngb-tab title="Related Parties">
                       <ng-template ngbTabContent>
-                        <h5>Related PArties Go Here</h5>
+                        <app-related-parties [ID]=agreementId></app-related-parties>
                       </ng-template>
                   </ngb-tab>
                   <ngb-tab title="Aquisitions">
                       <ng-template ngbTabContent>
-                        <h5>Aquisitions Go Here</h5>
+                        <app-aquisitions [ID]=agreementId></app-aquisitions>
                       </ng-template>
                   </ngb-tab>
                   <ngb-tab title="Images">

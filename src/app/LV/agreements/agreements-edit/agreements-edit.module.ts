@@ -8,7 +8,7 @@ import { MyDatePickerModule} from 'mydatepicker';
 import { NgbButtonsModule, NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
-import { NgbTabsetModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbTabsetModule, NgbModule, NgbAccordionModule} from '@ng-bootstrap/ng-bootstrap';
 import { ToastyModule} from 'ng2-toasty';
 
 @NgModule({
@@ -24,7 +24,9 @@ import { ToastyModule} from 'ng2-toasty';
     NgSelectModule,
     FormsModule,
     NgbTabsetModule,
-    ToastyModule
+    ToastyModule,
+    NgbModule,
+    NgbAccordionModule
   ]
 })
 export class AgreementsEditModule { }

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AgreementComment } from '../../models/agreements/agreement-comment';
+import { Observable } from 'rxjs';
 
 
 const httpOtpions = {
@@ -46,14 +48,16 @@ export class AgreementService {
   }
 
   getAgreementComments(agreementId){
-    return this._http.get(`https://localhost:44390/api/agreements/${agreementId}/comments`);
+    let comments = this._http.get<AgreementComment[]>(`https://localhost:44390/api/agreements/${agreementId}/comments`);
+    return comments;
   }
 
-  getAgreementComment(agreementId, commentId){
-    return this._http.get(`https://localhost:44390/api/agreements/${agreementId}/comments/${commentId}`)
+  getAgreementComment(agreementId: Number, commentId: Number){
+    let comment = this._http.get<AgreementComment>(`https://localhost:44390/api/agreements/${agreementId}/comments/${commentId}`)
+    return comment;
   }
 
-  updateAgreementComment(agreementId, commentId, comment){
+  updateAgreementComment(agreementId, commentId, comment, userId=0){
     return this._http.patch(`https://localhost:44390/api/agreements/${agreementId}/comments/${commentId}`, comment);
   }
 
@@ -66,7 +70,11 @@ export class AgreementService {
   }
   
   getAgreementTracts(agreementId){
-    return this._http.get(`https://localhost44390/api/agreements/${agreementId}/tracts`);
+    return this._http.get(`https://localhost:44390/api/agreements/${agreementId}/tracts`, httpOtpions);
+  }
+
+  getAgreementTractOptions(){
+    return this._http.get(`https://localhost:44390/api/agreements/tracts/options`);
   }
   
   updateAgreementTract(agreementId, tractId){
@@ -76,4 +84,14 @@ export class AgreementService {
   deleteAgreementTract(agreementId, tractId){
     return this._http.delete(`https://localhost:44390/api/agreements/${agreementId}/tracts/${tractId}`);
   }
+
+  createAgreementRelatedParty(agreementId, relatedParty){
+    return this._http.post(`https://localhost:44390/api/agreements/${agreementId}/related_parties`, relatedParty)
+  }
+
+  getAgreementRelatedParties(agreementId){
+    return this._http.get(`https://localhost:44390/api/agreements/${agreementId}/related_parties`);
+  }
+
+
 }

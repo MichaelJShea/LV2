@@ -1,5 +1,6 @@
 export class AgreementComment {
 
+    public AgreementCommentID: Number; 
     public AgreementID: Number;
     public AgreementCommentText: String;
     public CreatedBy: String;

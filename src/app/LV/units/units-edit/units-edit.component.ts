@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./units-edit.component.scss']
 })
 export class UnitsEditComponent implements OnInit {
+  private Module: String; 
 
-  constructor() { }
+  constructor() {
+    this.Module = "UNIT"
+   }
 
   ngOnInit() {
   }

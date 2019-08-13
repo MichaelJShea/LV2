@@ -1,3 +1,246 @@
-<p>
-  units-edit works!
-</p>
+
+<div class="card" *ngIf="selectOptions">
+  <div class="bg-dark border rounded sticky-top row p-2 offset-5">
+          <button (click)="saveAgreement()" (click)="addToast({title:'Agreement Saved!', msg:'Save Was Successful', timeout: 5000, theme:'bootstrap', position:'bottom-right', type:'success'})" class="btn btn-info btn-sm mb-0 align-bottom" [placement]="'bottom'" ngbTooltip="Save Agreement" type="button" class="btn btn-sm btn-success toolbar-btn ml-1"><i class="fa fa-save"></i>Save</button>
+          <button (click)="addToast({title:'Whoops!', msg:'THIS WILL MAKE DATASHEET', timeout: 5000, theme:'bootstrap', position:'bottom-right', type:'info'})" class="btn btn-info btn-sm mb-0 align-bottom" [placement]="'bottom'" ngbTooltip="Datasheet" type="button" class="btn btn-sm btn-light toolbar-btn icon-btn"><i class="fa fa-table"></i></button>
+          <button (click)="addToast({title:'UH OH!', msg:'THIS WILL CREATE CASE', timeout: 5000, theme:'bootstrap', position:'bottom-right', type:'warning'})" class="btn btn-info btn-sm mb-0 align-bottom" [placement]="'bottom'" ngbTooltip="Create Case" type="button" class="btn btn-sm btn-info toolbar-btn icon-btn"><i class="fa fa-user"></i></button>
+          <button (click)="addToast({title:'NOPE!', msg:'THIS WILL SEND EMAIL', timeout: 5000, theme:'bootstrap', position:'bottom-right', type:'warning'})" class="btn btn-info btn-sm mb-0 align-bottom" [placement]="'bottom'" ngbTooltip="Contact" type="button" class="btn btn-sm btn-secondary toolbar-btn icon-btn"><i class="fa fa-envelope"></i></button>
+          <button (click)="addToast({title:'SORRY!', msg:'THIS WILL COPY', timeout: 5000, theme:'bootstrap', position:'bottom-right', type:'warning'})" class="btn btn-info btn-sm mb-0 align-bottom" [placement]="'bottom'" ngbTooltip="Copy Agreement" type="button" class="btn btn-sm btn-warning toolbar-btn icon-btn"><i class="fa fa-copy"></i></button>
+          <button (click)="addToast({title:'Nice Try!', msg:'THIS WILL DLETE', timeout: 5000, theme:'bootstrap', position:'bottom-right', type:'warning'})" class="btn btn-info btn-sm mb-0 align-bottom" [placement]="'bottom'" ngbTooltip="Delete Agreement" type="button" class="btn btn-sm btn-danger toolbar-btn icon-btn"><i class="fa fa-trash-alt"></i></button>
+          <h6 class="text-light mt-2 mr-2">Status:</h6>
+          <ng-select [items]="selectOptions.AgreementStatuses"
+              bindLabel="AgreementStatusDesc"
+              bindValue = 'AgreementStatusCode'
+              placeholder="Agreement Status"
+              dropdownPosition= 'bottom'
+              [(ngModel)]="agreement.AgreementStatusCode"
+              name="AgreementStatusCode"
+              class="btn-sm"
+              id="Agreement-Status"
+              >
+          </ng-select>
+  </div>
+
+      <div class="card-body">
+              <div class="form-row">
+    
+              </div>
+              <div class="form-row m-0 p-0">
+                <div class="form-group col-md-4">
+                    <label class="col-form-label-sm font-weight-bold pb-0">Agreement Number:</label>
+                    <input *ngIf="agreementExists" [(ngModel)]="agreement.AgreementNumber" name="AgreementNumber" type="text" class="form-control" placeholder="Agreement Number" readonly>
+                    <input *ngIf="!agreementExists" [(ngModel)]="agreement.AgreementNumber" name="AgreementNumber" type="text" class="form-control bg-white " placeholder="Agreement Number">
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="col-form-label-sm font-weight-bold pb-0">First Party:</label>
+                    <input [(ngModel)]="agreement.FirstParty" name="FirstParty" type="text" class="form-control bg-white" placeholder="First Party">
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="col-form-label-sm font-weight-bold pb-0">Second Party:</label>
+                  <input [(ngModel)]="agreement.SecondParty" name="SecondParty" type="text" class="form-control bg-white" placeholder="Second Party">
+                </div>
+              </div>
+              <div class="form-row m-0">
+                  <div class="form-group col-md-4">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Alt. Agreement Number:</label>
+                      <input [(ngModel)]="agreement.AltAgreementNumber" name="AltAgreementNumber" type="text" class="form-control bg-white " placeholder="Agreement Number">
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Gross Acres:</label>
+                      <input [(ngModel)]="agreement.GrossAcres_Calc" name="GrossAcres_Calc" type="text" class="form-control" readonly>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Agreement Date:</label>
+                      <input [(ngModel)]="agreement.AgreementDate" name="AgreementDate" type="date" class="form-control bg-white">
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="font-weight-bold">Term:</label>
+                      <input [(ngModel)]="agreement.Term" name="Term" type="number" class="form-control bg-white">
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="font-weight-bold">Unit:</label>
+                      <ng-select [items]="TermUnits"
+                                 bindLabel="description"
+                                 bindValue = "value"
+                                 placeholder="Select Unit"
+                                 dropdownPosition= 'bottom'
+                                 [(ngModel)]="agreement.TermUnit"
+                                 name="TermUnit"
+                                 class=""
+                                 >
+                      </ng-select>
+                  </div>
+              </div>
+              <div class="form-row m-0">
+                  <div class="form-group col-md-4">
+                      <label class="bmd-label-floating font-weight-bold">Agreement Type:</label>
+                      <ng-select [items]="selectOptions.AgreementTypes"
+                                 bindLabel="AgreementTypeDesc"
+                                 bindValue = "AgreementTypeCode"
+                                 placeholder="Select Type"
+                                 dropdownPosition= 'bottom'
+                                 [(ngModel)]="agreement.AgreementTypeCode"
+                                 name="AgreementTypeCode"
+                                 class=""
+                                 >
+                      </ng-select>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Reported Gross Acres:</label>
+                      <input [(ngModel)]="agreement.ReportedGrossAcres_Calc" name="ReportedGrossAcres_Calc" type="text" class="form-control" readonly>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Effective Date:</label>
+                      <input [(ngModel)]="agreement.EffectiveDate" name="EffectiveDate" type="date" class="form-control bg-white">
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Expires:</label>
+                      <input [(ngModel)]="agreement.ExpireDate_Calc" name="ExpireDate_Calc" type="date" class="form-control" readonly>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Drop Date:</label>
+                      <input [(ngModel)]="agreement.DropDate" name="DropDate" type="date" class="form-control bg-white" >
+                  </div>
+              </div>
+              <div class="form-row m-0">
+                  <div class="form-group col-md-4">
+                      <label class="bmd-label-floating font-weight-bold">Rights Owned:</label>
+                      <ng-select [items]="selectOptions.AgreementRightsTypes"
+                                 bindLabel="AgreementRightsTypeDesc"
+                                 bindValue = "AgreementRightsTypeCode"
+                                 placeholder="Select Rights"
+                                 dropdownPosition= 'bottom'
+                                 [(ngModel)]="agreement.AgreementRightsTypeCode"
+                                 name="AgreementRightsTypeCode"
+                                 class=""
+                                 >
+                      </ng-select>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Net Acres:</label>
+                      <input [(ngModel)]="agreement.NetAcres_Calc" name="NetAcres_Calc" type="text" class="form-control" readonly>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Next Obligation:</label>
+                      <input [(ngModel)]="agreement.NextObligationDate" name="NextObligation" type="date" class="form-control" readonly>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Extended Expiration:</label>
+                      <input [(ngModel)]="ExtendedExpDate" name="ExtendedExpDate" type="date" class="form-control bg-white" placeholder="YYYY-MM-DD">
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="bmd-label-floating font-weight-bold">Drop Reason:</label>
+                      <ng-select [items]="selectOptions.AgreementDropReasons"
+                                 bindLabel="DropReasonDesc"
+                                 bindValue = "DropReasonCode"
+                                 placeholder="Select Reason"
+                                 dropdownPosition= 'bottom'
+                                 [(ngModel)]="agreement.DropReasonCode"
+                                 name="DropReasonCode"
+                                 class=""
+                                 >
+                      </ng-select>
+                  </div>
+              </div>
+              <div class="form-row m-0">
+                  <div class="form-group col-md-4">
+                      <label class="bmd-label-floating font-weight-bold">Agreement Group:</label>
+                      <ng-select [items]="cities"
+                                 bindLabel="name"
+                                 placeholder="Select Group"
+                                 dropdownPosition= 'bottom'
+                                 [(ngModel)]="agreement.AgreementGroupFormCode"
+                                 name="AgreementGroupFormCode"
+                                 class=""
+                                 >
+                      </ng-select>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Group Acres:</label>
+                      <input [(ngModel)]="agreement.GroupAcres_Calc" name="GroupAcres_Calc" type="text" class="form-control" readonly>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">First Assn Delivered:</label>
+                      <input [(ngModel)]="agreement.AssnDeliveredDate" name="AssnDeliveredDate" type="date" class="form-control bg-white">
+                  </div>
+                  <div class="form-group col-md-4">
+                      <label class="col-form-label-sm font-weight-bold pb-0">First Assn Received Notes:</label>
+                      <textarea [(ngModel)]="agreement.AssnReceivedComment" name="AssnReceivedComment" type="text" placeholder="Notes" class="form-control bg-white"></textarea>
+                  </div>
+              </div>
+              <div class="form-row m-0">
+                  <div class="form-group col-md-4">
+
+                  </div>
+                  <div class="form-group col-md-1">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Co Acres:</label>
+                      <input [(ngModel)]="agreement.CompanyAcres_Calc" name="CompanyAcres_Calc" type="text" class="form-control" readonly>
+                  </div>
+                  <div class="form-group col-md-1">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Co NRIA:</label>
+                      <input [(ngModel)]="agreement.CompanyNRIAcres_Calc" name="CompanyNRIAcres_Calc" type="text" class="form-control" readonly>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label class="col-form-label-sm font-weight-bold pb-0">First Assn Delivered:</label>
+                      <input [(ngModel)]="agreement.AssnDeliveredDate" name="AssnDeliveredDate" type="date" class="form-control bg-white">
+                  </div>
+                  <div class="form-group col-md-4">
+                      <label class="col-form-label-sm font-weight-bold pb-0">First Assn Delivered Notes:</label>
+                      <textarea [(ngModel)]="agreement.AssnDeliveredComments" name="AssnDeliveredComments" type="text" placeholder="Notes" class="form-control shadow-sm bg-white"></textarea>
+                  </div>
+              </div>
+              <div class="form-row m-0">
+                  <div class="form-group col-md-12">
+                      <label class="col-form-label-sm font-weight-bold pb-0">Legal Description:</label>
+                      <textarea [(ngModel)]="agreement.AgreementLegal" name="AgreementLegal" class="form-control bg-white" rows="3"></textarea>
+                  </div>
+              </div>
+      </div>
+  </div>
+
+
+  <div class="card">
+    <div class="card-body">
+        <div class="row nav-justified">
+            <div class="col-12">
+              <ngb-tabset type="pills">
+                <ngb-tab title="Tracts" class="mb-3">
+                  <ng-template ngbTabContent>
+                    <app-tracts [ID]="agreementId"></app-tracts>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Provisions">
+                  <ng-template ngbTabContent>
+                    <app-provisions [ID]=agreementId></app-provisions>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Cross References">
+                  <ng-template ngbTabContent>
+                    <app-x-refs [ID]=agreementId></app-x-refs>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Related Parties">
+                    <ng-template ngbTabContent>
+                      <app-related-parties [ID]=agreementId></app-related-parties>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Aquisitions">
+                    <ng-template ngbTabContent>
+                      <app-aquisitions [ID]=agreementId></app-aquisitions>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Images">
+                    <ng-template ngbTabContent>
+                      <app-files-upload [ID]=agreementId></app-files-upload>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Comments"><i class="fa fa-star"></i>
+                  <ng-template ngbTabContent>
+                      <app-comments [ID]="agreementId" [Module]="Module"></app-comments>
+                  </ng-template>
+                </ngb-tab>
+              </ngb-tabset>
+        </div>
+  </div>
+</div>
+<ng2-toasty [position]="position"></ng2-toasty>

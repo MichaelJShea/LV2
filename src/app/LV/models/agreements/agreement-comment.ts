@@ -6,5 +6,6 @@ export class AgreementComment {
     public CreatedBy: String;
     public CreatedDate?: Date;
     public ModifiedBy: String;
+    public ModifiedDate?: Date; 
     public SrcDesc: String;
 }

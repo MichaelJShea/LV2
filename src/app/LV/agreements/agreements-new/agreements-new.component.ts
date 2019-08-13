@@ -5,6 +5,7 @@ import { AgreementService } from '../../services/agreement-service/agreement.ser
 import { NgForm } from '@angular/forms';
 import { Router } from "@angular/router";
 import { Agreement } from '../../models/agreements/agreement'
+import { HttpResponse } from '@angular/common/http';
 
 
 @Component({
@@ -13,57 +14,8 @@ import { Agreement } from '../../models/agreements/agreement'
   styleUrls: ['./agreements-new.component.scss']
 })
 export class AgreementsNewComponent implements OnInit {
-  testAgreement: Agreement;
-  agreement = {
-    AgreementNumber: null,
-    AltAgreementNumber: null,
-    AgreementName: null,
-    ShortDesc: null,
-    FirstParty: null,
-    SecondParty: null,
-    AgreementClassCode: null,
-    AgreementTypeCode: null,
-    AgreementRightsTypeCode: null,
-    AgreementStatusCode: null,
-    AgreementForm: null,
-    AgreementGroupFormCode: null,
-    AgreementDate: null,
-    EffectiveDate: null,
-    Term: null,
-    TermUnit: null,
-    ExpireDate_Calc: null,
-    ExtendedExpDate: null,
-    DropReasonCode: null,
-    DropDate: null,
-    AssnReceivedDate: null,
-    AssnReceivedComment: null,
-    AssnDeliveredDate: null,
-    AssnDeliveredComment: null,
-    SourceDeedDate: null,
-    LAGSignedDate: null,
-    DueDiligenceDate: null,
-    ActualCloseDate: null,
-    AgreementLegal: null,
-    GrossAcres_Calc: null,
-    ReportedGrossAcres_Calc: null,
-    NetAcres_Calc: null,
-    GroupAcres_Calc: 0,
-    CompanyAcres_Calc: 0,
-    CompanyNRIAcres_Calc: 0,
-    AcquisitionCost_Calc: 0,
-    ProvisionSummary_Calc: 0,
-    ProvisionCommentSummary_Calc: 0,
-    NextObligationDate: null,
-    AgreementXrefCount: null,
-    WellXrefCount: null,
-    Landman: null,
-    TeamID: null,
-    Lead: null,
-    LeadSubStage: null,
-    Owned: null,
-    SrcDesc: null
-  }
-  selectOptions: any;
+  private NewAgreement: Agreement;
+  private SelectOptions: any[];
   TermUnits = [
     { description: 'Days', value: 'D'},
     { description: 'Months', value: 'M'},
@@ -71,6 +23,7 @@ export class AgreementsNewComponent implements OnInit {
   ]
   public DateMask = [/\d/, /\d/, /\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, ' - ', /\d/, /\d/, /\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/ ];
 
+  // Toast Options
   position = 'bottom-right';
   title: string;
   msg: string;
@@ -78,42 +31,38 @@ export class AgreementsNewComponent implements OnInit {
   theme = 'bootstrap';
   type = 'default';
   closeOther = false;
-  GroupFormCodes = [
-    {groupName: 'Base Provisions', groupCode: 'BASE'}
-  ]
-  AgreementClasses = [
-    {className: 'Lease', classCode: 'LEAS'},
-    {className: 'Contract', classCode: 'CON'}
-  ]
-@ViewChild('newAgreement') formValues;
+  // End Toast Options
 
-  constructor(    
-    private _agreementService: AgreementService,
-    private toastyService: ToastyService,
-    private router: Router) { }
+  constructor( private _agreementService: AgreementService, private toastyService: ToastyService, private router: Router) {
+    this.NewAgreement = new Agreement;
+    this.SelectOptions = []
+   }
 
   ngOnInit() {
     this.getAgreementSelectOptions();
   }
 
-  createNewAgreement(agreement : NgForm){
-    for(var field in agreement){
-      console.log(field)
-    }
+  createNewAgreement(agreement : Agreement){
     console.log("NEW AGREEMENT COMING IN HOT", agreement)
-    let newAgreement = this._agreementService.createAgreement(agreement);
-    newAgreement.subscribe(data => {
-      console.log("New Agreement Made",data); 
-      this.formValues.resetForm()
-      this.router.navigate(['agreements', 'edit', `${data['AgreementID']}`])
+    this._agreementService.createAgreement(agreement)
+    .subscribe((response) => {
+      if(response.status === 201 && response.ok === true){
+        this.addToast({title:'Agreement Created!', msg:'Save Was Successful', timeout: 1000, theme:'bootstrap', position:'bottom-right', type:'success'})
+        console.log("REPONSE:", response)
+        console.log("New Agreement Made",response.body); 
+        this.router.navigate(['agreements', 'edit', `${response.body.AgreementID}`])
+      }
+      else{
+        this.addToast({title:'Agreement Creation Unsuccesfull', msg:'Please Review Form and Try Again ', timeout: 5000, theme:'bootstrap', position:'bottom-right', type:'danger'})
+      }
     })
   }
 
 
   getAgreementSelectOptions(){
-    let options = this._agreementService.getAgreementSearchOptions();
-    options.subscribe( data => {
-      this.selectOptions = data
+    this._agreementService.getAgreementSearchOptions()
+    .subscribe( (data: any[]) => {
+      this.SelectOptions = data
       console.log('Select Options', data)
     })
   }
@@ -146,6 +95,10 @@ export class AgreementsNewComponent implements OnInit {
       case 'error': this.toastyService.error(toastOptions); break;
       case 'warning': this.toastyService.warning(toastOptions); break;
     }
+  }
+
+  ngOnDestroy(){
+    
   }
 
 }

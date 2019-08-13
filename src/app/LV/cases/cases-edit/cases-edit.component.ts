@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cases-edit.component.scss']
 })
 export class CasesEditComponent implements OnInit {
-
-  constructor() { }
+  private Module: String;
+  constructor() {
+    this.Module = "CASE"
+  }
 
   ngOnInit() {
+
   }
 
 }
